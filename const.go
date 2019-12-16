@@ -3,7 +3,7 @@ package jmid
 type logCtxKey struct{}
 
 var (
-	TraceLogMicroCtxKey = logCtxKey{}
+	traceLogMicroCtxKey = logCtxKey{}
 )
 
 const (

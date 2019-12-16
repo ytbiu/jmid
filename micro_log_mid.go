@@ -1,14 +1,11 @@
 package jmid
 
 import (
-
 	"context"
 
 	"github.com/micro/go-micro/metadata"
 	"github.com/micro/go-micro/server"
 	"github.com/sirupsen/logrus"
-	"gitlab.exmarttech.com/exsmart-go/warpper/mid"
-
 )
 
 // micro opentracing中间件
@@ -26,8 +23,8 @@ func TraceMicroLogMid() server.HandlerWrapper {
 				return nil
 			}
 
-			logWithTraceID := logrus.WithField(mid.TraceIDKey, traceID)
-			ctx = context.WithValue(ctx, mid.TraceLogMicroCtxKey, logWithTraceID)
+			logWithTraceID := logrus.WithField(traceIDKey, traceID)
+			ctx = context.WithValue(ctx, traceLogMicroCtxKey, logWithTraceID)
 
 			h(ctx, req, rsp)
 			return nil
@@ -37,7 +34,7 @@ func TraceMicroLogMid() server.HandlerWrapper {
 
 // 获取注入traceid后的日志对象
 func FromCtx(c context.Context) *logrus.Entry {
-	logWithTrace, exist := c.Value(mid.TraceLogMicroCtxKey).(*logrus.Entry)
+	logWithTrace, exist := c.Value(traceLogMicroCtxKey).(*logrus.Entry)
 	if !exist {
 		return logrus.NewEntry(logrus.StandardLogger())
 	}
