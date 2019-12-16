@@ -1,4 +1,4 @@
-package mjaeger
+package jmid
 
 import (
 	"context"

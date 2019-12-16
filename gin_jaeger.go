@@ -1,4 +1,4 @@
-package mjaeger
+package jmid
 
 import (
 	"context"
@@ -17,7 +17,7 @@ const (
 )
 
 // gin jaeger中间件
-func GinMid(tags ...map[string]interface{}) gin.HandlerFunc {
+func TraceGinMid(tags ...map[string]interface{}) gin.HandlerFunc {
 
 	return func(c *gin.Context) {
 
