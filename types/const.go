@@ -1,4 +1,4 @@
-package jmid
+package types
 
 type logCtxKey struct{}
 
