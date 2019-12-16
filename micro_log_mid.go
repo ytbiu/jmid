@@ -1,7 +1,6 @@
-package tlog
+package jmid
 
 import (
-	"jmid"
 
 	"context"
 
@@ -13,7 +12,7 @@ import (
 )
 
 // micro opentracing中间件
-func MicroLogMid() server.HandlerWrapper {
+func TraceMicroLogMid() server.HandlerWrapper {
 	return func(h server.HandlerFunc) server.HandlerFunc {
 		return func(ctx context.Context, req server.Request, rsp interface{}) error {
 			md, exist := metadata.FromContext(ctx)
@@ -21,7 +20,7 @@ func MicroLogMid() server.HandlerWrapper {
 				h(ctx, req, rsp)
 				return nil
 			}
-			traceID, exist := md[jmid.TraceIDKey]
+			traceID, exist := md[traceIDKey]
 			if !exist {
 				h(ctx, req, rsp)
 				return nil

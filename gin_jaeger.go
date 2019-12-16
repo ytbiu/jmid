@@ -9,7 +9,6 @@ import (
 	"github.com/micro/go-micro/metadata"
 	"github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/ext"
-	"jmid/types"
 )
 
 const (
@@ -50,9 +49,9 @@ func TraceGinMid(tags ...map[string]interface{}) gin.HandlerFunc {
 			span = opentracing.GlobalTracer().StartSpan(c.Request.URL.Path, opentracing.ChildOf(spanCtx))
 		}
 
-		traceID := c.Request.Header.Get(types.TraceIDKey)
-		md[types.TraceIDKey] = traceID
-		span.SetTag(types.TraceIDKey, traceID)
+		traceID := c.Request.Header.Get(traceIDKey)
+		md[traceIDKey] = traceID
+		span.SetTag(traceIDKey, traceID)
 
 		if err := opentracing.GlobalTracer().Inject(span.Context(),
 			opentracing.TextMap,

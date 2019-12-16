@@ -1,18 +1,17 @@
-package tlog
+package jmid
 
 import (
-	"jmid"
 
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 )
 
 // gin opentracing 中间件
-func GinTraceMid() gin.HandlerFunc {
+func TraceGinLogMid() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		if traceID := c.Request.Header.Get(jmid.TraceIDKey); traceID != "" {
-			logWithTraceID := logrus.WithField(jmid.TraceIDKey, c.Request.Header.Get(jmid.TraceIDKey))
-			c.Set(jmid.TraceLogKey, logWithTraceID)
+		if traceID := c.Request.Header.Get(traceIDKey); traceID != "" {
+			logWithTraceID := logrus.WithField(traceIDKey, c.Request.Header.Get(traceIDKey))
+			c.Set(traceLogKey, logWithTraceID)
 		}
 	}
 
@@ -20,7 +19,7 @@ func GinTraceMid() gin.HandlerFunc {
 
 // gin 获取注入traceid 后的日志对象
 func FromGCtx(c *gin.Context) *logrus.Entry {
-	v, exist := c.Get(jmid.TraceLogKey)
+	v, exist := c.Get(traceLogKey)
 	if !exist {
 		return logrus.NewEntry(logrus.StandardLogger())
 	}

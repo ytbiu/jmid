@@ -1,4 +1,4 @@
-package types
+package jmid
 
 type logCtxKey struct{}
 
@@ -7,6 +7,6 @@ var (
 )
 
 const (
-	TraceIDKey  = "x-atrace-id"
-	TraceLogKey = "trace-log"
+	traceIDKey  = "x-atrace-id"
+	traceLogKey = "trace-log"
 )
